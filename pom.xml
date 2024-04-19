@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.karbit</groupId>
+	<artifactId>article-manager</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<modules>
+		<module>article-manager-core</module>
+		<module>article-manager-common</module>
+	</modules>
+
+	<properties>
+		<deploy-directory>${project.build.directory}/deploy</deploy-directory>
+
+		<!--karbit family-->
+		<karbit.skeleton.version>1.0.0-SNAPSHOT</karbit.skeleton.version>
+		<karbit.tag.common.version>1.0.0-SNAPSHOT</karbit.tag.common.version>
+		<karbit.user.common.version>1.0.0-SNAPSHOT</karbit.user.common.version>
+
+		<!--spring family-->
+		<springdoc.version>1.6.3</springdoc.version>
+		<spring.cloud.sleuth.version>3.1.8</spring.cloud.sleuth.version>
+		<spring.cloud.version>2022.0.2</spring.cloud.version>
+
+		<!--other-->
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.0</version>
+	</parent>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.karbit.skeleton</groupId>
+				<artifactId>skeleton</artifactId>
+				<version>${karbit.skeleton.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.karbit.postman</groupId>
+				<artifactId>sms-common</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.karbit</groupId>
+				<artifactId>article-manager-common</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

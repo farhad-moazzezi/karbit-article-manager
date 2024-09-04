@@ -14,13 +14,14 @@ import org.karbit.article.core.biz.article.dto.output.ArticleSummary;
 import org.karbit.article.core.model.ArticleStatus;
 import org.karbit.article.core.model.Author;
 import org.karbit.article.core.model.Tag;
+import org.karbit.convertor.DateConvertor;
 import org.karbit.post.biz.dto.AuthorProfile;
-import org.karbit.postmng.common.dto.common.ArticleSummaryDto;
-import org.karbit.postmng.common.dto.common.AuthorDto;
-import org.karbit.postmng.common.dto.common.TagDto;
-import org.karbit.postmng.common.dto.request.CreateArticleReq;
-import org.karbit.postmng.common.dto.request.DraftArticleReq;
-import org.karbit.postmng.common.dto.response.ArticleDetailResp;
+import org.karbit.article.common.dto.common.ArticleSummaryDto;
+import org.karbit.article.common.dto.common.AuthorDto;
+import org.karbit.article.common.dto.common.TagDto;
+import org.karbit.article.common.dto.request.CreateArticleReq;
+import org.karbit.article.common.dto.request.DraftArticleReq;
+import org.karbit.article.common.dto.response.ArticleDetailResp;
 import org.karbit.article.core.client.tagmanager.mapper.TagMapper;
 import org.karbit.article.core.config.ArticleProp;
 import org.karbit.article.core.model.Article;
@@ -37,24 +38,20 @@ public abstract class ArticleServiceMapper {
 	@Autowired
 	protected ArticleProp articleProp;
 
-	@Mapping(target = "postId", source = "article.uniqueId")
-	@Mapping(target = "author", source = "author")
-	@Mapping(target = "modifyDate", source = "article.lastModifyDate")
-	@Mapping(target = "createDate", source = "article.creationDate")
-	@Mapping(target = "title", source = "article.title")
-	@Mapping(target = "content", source = "article.content")
-	@Mapping(target = "tags", source = "article.tags", qualifiedByName = "toTag")
-	public abstract ArticleDetail toDetail(Article article, AuthorProfile author);
-
 	public abstract List<ArticleSummary> toSummary(List<Article> articles);
 
 	@Mapping(target = "postId", source = "article.uniqueId")
 	@Mapping(target = "author", source = "author")
-	@Mapping(target = "modifyDate", source = "article.lastModifyDate")
+	@Mapping(target = "modifyDate", source = "article.lastModifyDate", qualifiedByName = "toPersianDate")
 	@Mapping(target = "title", source = "article.title")
 	@Mapping(target = "summary", source = "article.content", qualifiedByName = "summarizeContent")
 	@Mapping(target = "tags", source = "article.tags", qualifiedByName = "toTag")
 	public abstract ArticleSummary toSummary(Article article);
+
+	@Named("toPersianDate")
+	public String toPersianDate(Date date) {
+		return DateConvertor.toPersianDate(date);
+	}
 
 
 	@Named("toTag")
@@ -84,7 +81,7 @@ public abstract class ArticleServiceMapper {
 
 	@Mapping(target = "title", source = "draftedArticle.title")
 	@Mapping(target = "content", source = "draftedArticle.content")
-	@Mapping(target = "author.userId", source = "author.userId")
+	@Mapping(target = "author", source = "author")
 	@Mapping(target = "tags", source = "tags")
 	@Mapping(target = "status", expression = "java(ArticleStatus.PEND)")
 	@Mapping(target = "lastModifyDate", expression = "java(new Date())")

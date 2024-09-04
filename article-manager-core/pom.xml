@@ -38,9 +38,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>${artifactId}.${version}</finalName>
-					<outputDirectory>${deploy-directory}</outputDirectory>
+					<executable>true</executable>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -109,6 +115,10 @@
 			<artifactId>mongo</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.karbit.skeleton</groupId>
+			<artifactId>convertor</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.karbit.postman</groupId>
 			<artifactId>sms-common</artifactId>
 		</dependency>
@@ -133,5 +143,22 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.14.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.12.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.17.2</version>
+		</dependency>
 	</dependencies>
 </project>

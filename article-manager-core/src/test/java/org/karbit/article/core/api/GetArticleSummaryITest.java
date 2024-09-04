@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.karbit.article.core.model.ArticleStatus;
-import org.karbit.postmng.common.dto.common.ArticleSummaryDto;
-import org.karbit.postmng.common.dto.response.ArticleSummaryResp;
+import org.karbit.article.common.dto.common.ArticleSummaryDto;
+import org.karbit.article.common.dto.response.ArticleSummaryResp;
 import org.karbit.article.core.TestUtils;
 import org.karbit.article.core.config.ArticleProp;
 import org.karbit.article.core.dao.ArticleDao;

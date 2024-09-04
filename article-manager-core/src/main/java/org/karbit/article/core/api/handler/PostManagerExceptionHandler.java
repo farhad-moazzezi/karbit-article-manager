@@ -1,19 +1,15 @@
 package org.karbit.article.core.api.handler;
 
 import java.text.MessageFormat;
-import java.util.Locale;
 import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.karbit.article.core.util.BundleUtil;
-import org.karbit.postmng.common.dto.response.BasePostServiceResponse;
-import org.karbit.postmng.common.exception.ArticleNotFoundException;
-import org.karbit.postmng.common.exception.BasePostServiceException;
+import org.karbit.article.common.dto.response.BasePostServiceResponse;
+import org.karbit.article.common.exception.BasePostServiceException;
 import org.karbit.skeleton.base.result.dto.BaseResponse;
 import org.karbit.skeleton.base.result.dto.ResultSummary;
-import org.karbit.skeleton.base.result.exception.BaseException;
-import org.karbit.skeleton.base.result.exception.ServiceInvocationException;
 import org.karbit.user.common.ResultStatus;
 import org.karbit.user.common.dto.response.BaseUserServiceResponse;
 

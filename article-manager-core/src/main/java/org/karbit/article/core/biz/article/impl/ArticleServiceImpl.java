@@ -3,6 +3,7 @@ package org.karbit.article.core.biz.article.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
@@ -13,19 +14,17 @@ import org.karbit.article.core.biz.article.dto.input.DraftedArticleModel;
 import org.karbit.article.core.biz.article.dto.output.ArticleDetail;
 import org.karbit.article.core.biz.article.dto.output.ArticleSummary;
 import org.karbit.article.core.biz.tag.TagService;
-import org.karbit.article.core.biz.tag.dto.output.TagModel;
 import org.karbit.article.core.dao.ArticleDao;
 import org.karbit.article.core.model.ArticleStatus;
 import org.karbit.article.core.model.Author;
 import org.karbit.article.core.model.Tag;
-import org.karbit.post.biz.dto.AuthorProfile;
-import org.karbit.postmng.common.exception.ArticleNotFoundException;
-import org.karbit.postmng.common.exception.AuthorNotFoundException;
-import org.karbit.postmng.common.exception.EmptyAuthorIdException;
-import org.karbit.postmng.common.exception.EmptyContentException;
-import org.karbit.postmng.common.exception.EmptyTagException;
-import org.karbit.postmng.common.exception.EmptyTitleException;
-import org.karbit.postmng.common.exception.TooShortContentException;
+import org.karbit.article.common.exception.ArticleNotFoundException;
+import org.karbit.article.common.exception.AuthorNotFoundException;
+import org.karbit.article.common.exception.EmptyAuthorIdException;
+import org.karbit.article.common.exception.EmptyContentException;
+import org.karbit.article.common.exception.EmptyTagException;
+import org.karbit.article.common.exception.EmptyTitleException;
+import org.karbit.article.common.exception.TooShortContentException;
 import org.karbit.article.core.biz.article.mapper.article.ArticleServiceMapper;
 import org.karbit.article.core.biz.user.UserService;
 import org.karbit.article.core.config.ArticleProp;
@@ -53,11 +52,6 @@ class ArticleServiceImpl implements ArticleService {
 	private final ArticleProp articleProp;
 
 	@Override
-	public void publishCreationEvent(Article article) {
-		log.debug("going to publish article creation event -> {}", article);
-	}
-
-	@Override
 	public ArticleDetail getDetail(String articleId) {
 		return articleServiceMapper.toArticleDetail(findArticle(articleId));
 	}
@@ -83,11 +77,12 @@ class ArticleServiceImpl implements ArticleService {
 	@Override
 	public String createDraft(DraftedArticleModel draftedArticleModel) {
 		Article article;
-		Author author = getAuthorProfile(draftedArticleModel.getArticleId());
 		if (StringUtils.hasText(draftedArticleModel.getArticleId())) {
-			article = createNewDraftedArticle(draftedArticleModel, author);
-		} else {
 			article = updateExistDraftedArticle(draftedArticleModel);
+		} else {
+			Optional<Author> author = getAuthorProfile(draftedArticleModel.getAuthorId());
+			validateAuthor(author);
+			article = createNewDraftedArticle(draftedArticleModel, author.get());
 		}
 		return article.getUniqueId();
 	}
@@ -96,16 +91,26 @@ class ArticleServiceImpl implements ArticleService {
 	public String createNewArticle(ArticleModel articleModel) {
 		log.debug("going to create article -> {}", articleModel);
 		checkBeforeCreate(articleModel);
+		Optional<Author> author = getAuthorProfile(articleModel.getAuthorId());
+		validateAuthor(author);
+		Set<Tag> tags = tagService.findOrInsertTag(articleModel.getTags());
+		checkAfterFoundTags(tags);
 		Article article = new Article();
 		article.setTitle(articleModel.getTitle());
 		article.setContent(articleModel.getContent());
-		article.setAuthor(getAuthorProfile(articleModel.getAuthorId()));
-		article.setTags(tagService.findOrInsertTag(articleModel.getTags()));
+		article.setAuthor(author.get());
+		article.setTags(tags);
 		article.setStatus(ArticleStatus.PEND);
 		doBeforeSave(article);
 		article = save(article);
 		doAfterSave(article);
 		return article.getUniqueId();
+	}
+
+	private void checkAfterFoundTags(Set<Tag> tags) {
+		if (CollectionUtils.isEmpty(tags)) {
+			throw new EmptyTagException("article`s Tags is empty!");
+		}
 	}
 
 	private Article updateExistDraftedArticle(DraftedArticleModel draftArticle) {
@@ -146,7 +151,7 @@ class ArticleServiceImpl implements ArticleService {
 
 	private void checkBeforeCreate(ArticleModel articleModel) {
 		log.debug("going to check input value -> {}", articleModel);
-		checkAuthor(articleModel);
+		validateAuthor(articleModel);
 		checkTitle(articleModel);
 		checkContent(articleModel);
 	}
@@ -166,15 +171,14 @@ class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	private Author getAuthorProfile(String userId) {
+	private Optional<Author> getAuthorProfile(String userId) {
 		log.info("gonna to find author profile summary -> userId : {}", userId);
-		Author author = userService.getAuthorProfile(userId);
-		checkAuthor(author);
+		Optional<Author> author = userService.getAuthorProfile(userId);
 		log.debug("found author profile -> {}", author);
 		return author;
 	}
 
-	private void checkAuthor(ArticleModel model) {
+	private void validateAuthor(ArticleModel model) {
 		if (Objects.isNull(model.getAuthorId())) {
 			throw new EmptyAuthorIdException("author is empty!");
 		}
@@ -183,13 +187,17 @@ class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	private void checkAuthor(Author author) {
-		if (Objects.isNull(author)) {
+	private void validateAuthor(Optional<Author> author) {
+		if (Boolean.FALSE.equals(author.isPresent())) {
 			throw new AuthorNotFoundException("author not found!");
 		}
 	}
 
 	private void doAfterSave(Article post) {
 		publishCreationEvent(post);
+	}
+
+	private void publishCreationEvent(Article article) {
+		log.debug("going to publish article creation event -> {}", article);
 	}
 }

@@ -10,12 +10,12 @@ import org.karbit.article.core.biz.article.dto.output.ArticleSummary;
 import org.karbit.article.core.biz.article.mapper.article.ArticleServiceMapper;
 import org.karbit.article.core.model.ArticleStatus;
 import org.karbit.article.core.util.PaginationUtil;
-import org.karbit.postmng.common.dto.request.CreateArticleReq;
-import org.karbit.postmng.common.dto.request.DraftArticleReq;
-import org.karbit.postmng.common.dto.request.SearchByTitleReq;
-import org.karbit.postmng.common.dto.response.ArticleDetailResp;
-import org.karbit.postmng.common.dto.response.ArticleSummaryResp;
-import org.karbit.postmng.common.dto.response.CreateArticleResp;
+import org.karbit.article.common.dto.request.CreateArticleReq;
+import org.karbit.article.common.dto.request.DraftArticleReq;
+import org.karbit.article.common.dto.request.SearchByTitleReq;
+import org.karbit.article.common.dto.response.ArticleDetailResp;
+import org.karbit.article.common.dto.response.ArticleSummaryResp;
+import org.karbit.article.common.dto.response.CreateArticleResp;
 import org.karbit.article.core.config.ArticleProp;
 
 import org.springframework.http.MediaType;

@@ -1,7 +1,9 @@
 package org.karbit.article.core.biz.user;
 
+import java.util.Optional;
+
 import org.karbit.article.core.model.Author;
 
 public interface UserService {
-	Author getAuthorProfile(String userId);
+	Optional<Author> getAuthorProfile(String userId);
 }

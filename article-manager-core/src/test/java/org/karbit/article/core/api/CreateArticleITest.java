@@ -9,9 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import org.karbit.article.core.model.ArticleStatus;
-import org.karbit.postmng.common.ResultStatus;
-import org.karbit.postmng.common.dto.request.CreateArticleReq;
-import org.karbit.postmng.common.dto.response.CreateArticleResp;
+import org.karbit.article.common.ResultStatus;
+import org.karbit.article.common.dto.request.CreateArticleReq;
+import org.karbit.article.common.dto.response.CreateArticleResp;
 import org.karbit.article.core.TestUtils;
 import org.karbit.article.core.client.tagmanager.TagClient;
 import org.karbit.article.core.dao.ArticleDao;

@@ -7,7 +7,7 @@ import org.karbit.article.core.TestUtils;
 import org.karbit.article.core.dao.ArticleDao;
 
 import org.karbit.article.core.model.ArticleStatus;
-import org.karbit.postmng.common.dto.response.ArticleDetailResp;
+import org.karbit.article.common.dto.response.ArticleDetailResp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

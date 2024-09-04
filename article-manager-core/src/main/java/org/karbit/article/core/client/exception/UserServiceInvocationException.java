@@ -1,6 +1,6 @@
 package org.karbit.article.core.client.exception;
 
-import org.karbit.postmng.common.ResultStatus;
+import org.karbit.article.common.ResultStatus;
 import org.karbit.skeleton.base.result.exception.ServiceInvocationException;
 
 public class UserServiceInvocationException extends ServiceInvocationException {

@@ -19,6 +19,6 @@ public class ArticleSummary {
 
 	private Map<String, String> tags;
 
-	private Date modifyDate;
+	private String modifyDate;
 
 }

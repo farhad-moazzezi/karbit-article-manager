@@ -8,8 +8,8 @@ import org.karbit.article.core.TestUtils;
 import org.karbit.article.core.dao.ArticleDao;
 
 import org.karbit.article.core.model.ArticleStatus;
-import org.karbit.postmng.common.dto.request.SearchByTitleReq;
-import org.karbit.postmng.common.dto.response.ArticleSummaryResp;
+import org.karbit.article.common.dto.request.SearchByTitleReq;
+import org.karbit.article.common.dto.response.ArticleSummaryResp;
 import org.karbit.skeleton.base.result.dto.BaseRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;

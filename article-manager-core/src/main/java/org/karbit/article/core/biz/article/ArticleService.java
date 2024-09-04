@@ -11,7 +11,6 @@ import org.karbit.article.core.biz.article.dto.output.ArticleSummary;
 import org.karbit.article.core.model.Article;
 
 public interface ArticleService {
-	void publishCreationEvent(Article article);
 
 	ArticleDetail getDetail(String articleId);
 

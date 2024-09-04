@@ -17,6 +17,5 @@ public class Author {
 	@Indexed
 	private String userId;
 
-	@Exclude
 	private String nickname;
 }

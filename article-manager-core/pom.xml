@@ -119,6 +119,11 @@
 			<artifactId>convertor</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.karbit.skeleton</groupId>
+			<artifactId>test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.karbit.postman</groupId>
 			<artifactId>sms-common</artifactId>
 		</dependency>

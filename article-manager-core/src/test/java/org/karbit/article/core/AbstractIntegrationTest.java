@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.karbit.skeleton.base.result.dto.BaseRequest;
 import org.karbit.skeleton.base.result.dto.BaseResponse;
 import org.karbit.skeleton.base.result.exception.NotImplementedException;
+import org.karbit.test.Container;
+import org.karbit.test.EnableTestContainer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(classes = ArticleManagerBootstrap.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource({ "classpath:application-test.properties" })
+@EnableTestContainer(containers = { Container.MONGO_DB })
 public abstract class AbstractIntegrationTest {
 
 	@LocalServerPort

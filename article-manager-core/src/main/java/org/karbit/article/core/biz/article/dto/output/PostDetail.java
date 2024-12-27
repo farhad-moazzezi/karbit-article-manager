@@ -4,7 +4,6 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.ToString;
-import org.karbit.post.biz.dto.AuthorProfile;
 
 @Data
 @ToString

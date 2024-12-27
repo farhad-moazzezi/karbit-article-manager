@@ -1,8 +1,8 @@
 package org.karbit.article.common;
 
-import org.karbit.post.DefaultPostResultStatus;
+import org.karbit.skeleton.base.result.DefaultResultStatus;
 
-public class ResultStatus extends DefaultPostResultStatus {
+public class ResultStatus extends DefaultResultStatus {
 
 	public static final ResultStatus EX_EMPTY_AUTHOR_ID = new ResultStatus(422003001, "ex.empty.author.id");
 

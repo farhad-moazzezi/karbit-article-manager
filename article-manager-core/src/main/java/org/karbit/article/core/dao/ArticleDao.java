@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.karbit.article.core.model.Article;
 import org.karbit.article.core.model.ArticleStatus;
-import org.karbit.post.model.PostableStatus;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
